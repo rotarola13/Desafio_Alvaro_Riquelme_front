@@ -1,0 +1,50 @@
+<div class="contenedor" *ngIf="!register">
+    <div class="box-login shadow-lg border p-4 rounded">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <img src="assets\img\check.png" alt="Logo" id="logoSkoy">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center">Log In</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label class="mdc-text-field mdc-text-field--outlined w-100">
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput  
+                               placeholder="Ex. pat@example.com">
+                    </mat-form-field>
+                </label>
+            </div>
+        </div>
+
+        <!-- row 2 -->
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>Password</mat-label>
+                        <input type="password" matInput>
+                    </mat-form-field>
+                </label>
+            </div>
+
+            
+        </div>
+
+        <!-- row 2 -->
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <button mat-raised-button color="primary" class="w-100">Iniciar Sesión</button>            
+                <p class="mt-2 text-center link-custom">¿No tiene una cuenta? <a class="text-primario"  href="#" (click)="crearCuenta();">Abrir cuenta</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
