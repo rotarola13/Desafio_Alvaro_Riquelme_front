@@ -11,7 +11,7 @@
                     <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                         <mat-form-field class="example-full-width w-100">
                             <mat-label>RUT</mat-label>
-                            <input mask="00.000.000-0" (blur)="validarRUT()" #rut="ngModel" name="rut" [(ngModel)]="destinatario.rut" type="text" matInput>
+                            <input required mask="00.000.000-0" (blur)="validarRUT()" #rut="ngModel" name="rut" [(ngModel)]="destinatario.rut" type="text" matInput>
                         </mat-form-field>
                     </label>
                 </div>
@@ -19,7 +19,7 @@
                     <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                         <mat-form-field class="example-full-width w-100">
                             <mat-label>Nombre</mat-label>
-                            <input #name="ngModel" name="name" [(ngModel)]="destinatario.name" type="text" matInput>
+                            <input required #name="ngModel" name="name" [(ngModel)]="destinatario.name" type="text" matInput>
                         </mat-form-field>
                     </label>
                 </div>
@@ -27,7 +27,7 @@
                     <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                         <mat-form-field class="example-full-width w-100">
                             <mat-label>Correo</mat-label>
-                            <input #email="ngModel" name="email" [(ngModel)]="destinatario.email" type="text" matInput>
+                            <input required #email="ngModel" name="email" [(ngModel)]="destinatario.email" type="text" matInput>
                         </mat-form-field>
                     </label>
                 </div>
@@ -35,14 +35,14 @@
                     <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                         <mat-form-field class="example-full-width w-100">
                             <mat-label>Telefono</mat-label>
-                            <input #telefono="ngModel" name="telefono" [(ngModel)]="destinatario.telefono" type="text" matInput>
+                            <input required #telefono="ngModel" name="telefono" [(ngModel)]="destinatario.telefono" type="text" matInput>
                         </mat-form-field>
                     </label>
                 </div>
                 <div class="mt-4 ms-3 widthSelect">
                     <mat-form-field appearance="fill" class="widthSelect">
                         <mat-label>Choose an option</mat-label>
-                        <mat-select #bancoDestino="ngModel" name="bancoDestino" [(ngModel)]="destinatario.bancoDestino" >
+                        <mat-select required #bancoDestino="ngModel" name="bancoDestino" [(ngModel)]="destinatario.bancoDestino" >
                             <mat-option *ngFor="let banks of banks" [value]="banks.name">
                                 {{banks.name}}
                             </mat-option>
@@ -53,7 +53,7 @@
                 <div class="col-lg-6 mt-4">
                     <mat-form-field appearance="fill" class="widthSelect marginleftCustom">
                         <mat-label>Choose an option</mat-label>
-                        <mat-select #tipoCuenta="ngModel" name="tipoCuenta" [(ngModel)]="destinatario.tipoCuenta">
+                        <mat-select required #tipoCuenta="ngModel" name="tipoCuenta" [(ngModel)]="destinatario.tipoCuenta">
                             <mat-option *ngFor="let tipoCuentasBanco of tipoCuentasBanco" [value]="tipoCuentasBanco._id">
                                 {{tipoCuentasBanco.description}}
                             </mat-option>
@@ -64,7 +64,7 @@
                     <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                         <mat-form-field class="example-full-width w-100">
                             <mat-label>N° De Cuenta</mat-label>
-                            <input #numeroCuenta="ngModel" name="emanumeroCuentail" [(ngModel)]="destinatario.numeroCuenta" type="text" matInput>
+                            <input required #numeroCuenta="ngModel" name="emanumeroCuentail" [(ngModel)]="destinatario.numeroCuenta" type="text" matInput>
                         </mat-form-field>
                     </label>
                 </div>
@@ -72,7 +72,7 @@
 
             <div class="mt-4 row justify-content-center">
                 <button mat-raised-button color="basic" class="col-lg-5" (click)="cerrarDestinatario()">Cerrar</button>
-                <button mat-raised-button color="primary" type="submit" class="col-lg-5 ms-2">Crear</button>
+                <button mat-raised-button color="primary" [disabled]="destinatarioForm.invalid" type="submit" class="col-lg-5 ms-2">Crear</button>
             </div>
         </form>
     </div>
