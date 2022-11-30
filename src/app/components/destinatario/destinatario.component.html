@@ -11,7 +11,7 @@
                     <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                         <mat-form-field class="example-full-width w-100">
                             <mat-label>RUT</mat-label>
-                            <input #rut="ngModel" name="rut" [(ngModel)]="destinatario.rut" type="text" matInput>
+                            <input mask="00.000.000-0" (blur)="validarRUT()" #rut="ngModel" name="rut" [(ngModel)]="destinatario.rut" type="text" matInput>
                         </mat-form-field>
                     </label>
                 </div>

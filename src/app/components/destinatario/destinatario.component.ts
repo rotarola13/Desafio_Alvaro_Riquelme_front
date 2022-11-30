@@ -3,6 +3,7 @@ import { Banks } from 'src/app/models/banks';
 import { Destinatario } from 'src/app/models/destinatario';
 import { BanksService } from 'src/app/services/banks.service';
 import { UserService } from 'src/app/services/user.service';
+import {  validate, clean, format, getCheckDigit } from 'rut.js'
 
 @Component({
   selector: 'app-destinatario',
@@ -61,5 +62,10 @@ export class DestinatarioComponent implements OnInit {
         }
       }
     );
+  }
+
+  validarRUT(){
+    let valid=validate(this.destinatario.rut);
+    console.log(valid);
   }
 }
