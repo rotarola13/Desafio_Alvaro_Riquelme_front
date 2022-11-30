@@ -64,12 +64,12 @@ export class UserService {
         return this._http.post<any>(this.url +'registerDestinatario',params,{headers: headers});
     }
 
-    // getTipoCuenta(){      
+    getTipoCuenta(){      
 
-    //     let headers = new HttpHeaders({
-    //         'Content-Type':'application/json',
-    //         'Authorization':this.getToken()});
+        let headers = new HttpHeaders({
+            'Content-Type':'application/json',
+            'Authorization':this.getToken()});
 
-    //     return this._http.post<any>(this.url +'registerDestinatario',params,{headers: headers});
-    // }
+        return this._http.get<any>(this.url +'getTipoCuenta',{headers: headers});
+    }
 }

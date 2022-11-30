@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class DestinatarioComponent implements OnInit {
   @Output() close = new EventEmitter<boolean>();
   public destinatario: Destinatario;
+  tipoCuentasBanco: any;
   banks: any;
   errorMessage: any;
 
@@ -28,6 +29,12 @@ export class DestinatarioComponent implements OnInit {
       }
     );
 
+    this._userService.getTipoCuenta().subscribe(
+      response => {        
+        this.tipoCuentasBanco = response.tipoCuenta;       
+      }
+    );
+
   }
 
   cerrarDestinatario() {
@@ -38,15 +45,13 @@ export class DestinatarioComponent implements OnInit {
 
     this._userService.registrarDestinatario(this.destinatario).subscribe(
       response => {
-console.log(response);
-console.log(this.destinatario);
 
-        // if (!response.destinatario._id) {
-        //   alerta que no se ha registrado
-        // } else {
-        //   this.cerrarDestinatario();
+        if (!response.destinatario._id) {
+          //alerta que no se ha registrado
+        } else {
+          this.cerrarDestinatario();
 
-        // }
+        }
       },
       error => {
         var errorMessage = <any>error.error.message;

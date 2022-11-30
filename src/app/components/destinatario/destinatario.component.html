@@ -43,7 +43,7 @@
                     <mat-form-field appearance="fill" class="widthSelect">
                         <mat-label>Choose an option</mat-label>
                         <mat-select #bancoDestino="ngModel" name="bancoDestino" [(ngModel)]="destinatario.bancoDestino" >
-                            <mat-option *ngFor="let banks of banks" [value]="banks.id">
+                            <mat-option *ngFor="let banks of banks" [value]="banks.name">
                                 {{banks.name}}
                             </mat-option>
                         </mat-select>
@@ -54,8 +54,8 @@
                     <mat-form-field appearance="fill" class="widthSelect marginleftCustom">
                         <mat-label>Choose an option</mat-label>
                         <mat-select #tipoCuenta="ngModel" name="tipoCuenta" [(ngModel)]="destinatario.tipoCuenta">
-                            <mat-option *ngFor="let banks of banks" [value]="banks.id">
-                                {{banks.name}}
+                            <mat-option *ngFor="let tipoCuentasBanco of tipoCuentasBanco" [value]="tipoCuentasBanco._id">
+                                {{tipoCuentasBanco.description}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
