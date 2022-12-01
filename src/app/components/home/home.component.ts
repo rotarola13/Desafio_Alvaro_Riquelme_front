@@ -7,7 +7,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class HomeComponent {
   @Output() logOut = new EventEmitter<boolean>();
-  destinatario: any;
+  destinatario:  boolean=false;
+  bModuloTransferencia: boolean=false;
 
   logout(){
     this.logOut.emit(true);
@@ -15,6 +16,12 @@ export class HomeComponent {
 
   moduloDestinatrio(){
     this.destinatario=true
+    this.bModuloTransferencia=false;
+  }
+
+  moduloTransferencia(){
+    this.destinatario=true
+    this.bModuloTransferencia=true;
   }
 
   closeModuloDestinatario(){

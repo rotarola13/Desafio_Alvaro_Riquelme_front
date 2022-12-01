@@ -72,4 +72,14 @@ export class UserService {
 
         return this._http.get<any>(this.url +'getTipoCuenta',{headers: headers});
     }
+
+    
+    getDestinatarios(){
+      
+        let headers = new HttpHeaders({
+            'Content-Type':'application/json',
+            'Authorization':this.getToken()});
+
+        return this._http.get<any>(this.url +'getDestinatarios',{headers: headers});
+    }
 }

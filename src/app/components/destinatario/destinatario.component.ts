@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Banks } from 'src/app/models/banks';
 import { Destinatario } from 'src/app/models/destinatario';
 import { BanksService } from 'src/app/services/banks.service';
 import { UserService } from 'src/app/services/user.service';
-import {  validate, clean, format, getCheckDigit } from 'rut.js'
+import { validate, clean, format, getCheckDigit } from 'rut.js'
 
 @Component({
   selector: 'app-destinatario',
@@ -12,11 +12,17 @@ import {  validate, clean, format, getCheckDigit } from 'rut.js'
   providers: [BanksService, UserService]
 })
 export class DestinatarioComponent implements OnInit {
+  @Input() moduloTransferencia: boolean = false;
   @Output() close = new EventEmitter<boolean>();
   public destinatario: Destinatario;
+  public montoTransferencia: number = 0;
   tipoCuentasBanco: any;
   banks: any;
   errorMessage: any;
+
+  public destinatarioCard: any = [];
+  moduloRealizaTransferencia: boolean = false;
+  detalleDestinatario: any;
 
 
   constructor(private _banksService: BanksService, private _userService: UserService) {
@@ -26,16 +32,21 @@ export class DestinatarioComponent implements OnInit {
   ngOnInit(): void {
     this._banksService.getBanks().subscribe(
       response => {
-        this.banks = response.banks;       
+        this.banks = response.banks;
       }
     );
 
     this._userService.getTipoCuenta().subscribe(
-      response => {        
-        this.tipoCuentasBanco = response.tipoCuenta;       
+      response => {
+        this.tipoCuentasBanco = response.tipoCuenta;
       }
     );
 
+    this._userService.getDestinatarios().subscribe(
+      response => {
+        this.destinatarioCard = response.destinatario;
+      }
+    );
   }
 
   cerrarDestinatario() {
@@ -64,8 +75,22 @@ export class DestinatarioComponent implements OnInit {
     );
   }
 
-  validarRUT(){
-    let valid=validate(this.destinatario.rut);
+  validarRUT() {
+    let valid = validate(this.destinatario.rut);
     console.log(valid);
+  }
+
+  realizarTransferencia(destinatario: any) {
+    this.detalleDestinatario = destinatario;
+    this.moduloRealizaTransferencia = true;
+  }
+
+  volverDestinatario() {
+    this.moduloRealizaTransferencia = false;
+    this.moduloTransferencia = true;
+  }
+
+  saveTransferencia() {
+
   }
 }

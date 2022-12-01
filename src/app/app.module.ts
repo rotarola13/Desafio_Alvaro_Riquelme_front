@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon'
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { NgxMaskModule} from 'ngx-mask'
+import {ScrollingModule} from '@angular/cdk/scrolling';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { NgxMaskModule} from 'ngx-mask'
     MatIconModule,
     MatMenuModule,
     MatTooltipModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    ScrollingModule
     
   ],
   providers: [],

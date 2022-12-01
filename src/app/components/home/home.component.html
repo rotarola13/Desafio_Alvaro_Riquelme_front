@@ -6,7 +6,7 @@
           <mat-menu #menu="matMenu">
             <button mat-menu-item>
                 <mat-icon> attach_money</mat-icon>
-              <span>Transferencia</span>
+              <span (click)="moduloTransferencia()">Transferencia</span>
             </button> 
             <button mat-menu-item>
                 <mat-icon>supervisor_account</mat-icon>
@@ -20,12 +20,12 @@
     <span>Menu</span>
     <span class="spacer"></span>
     <button (click)="logout()" mat-icon-button class="example-icon favorite-icon" #tooltip="matTooltip"
-    matTooltip="Cerrar Sessión">
-        <mat-icon>cancel</mat-icon>
+    matTooltip="Cerrar Sessión">    
+        <mat-icon>cancel</mat-icon> 
     </button>
     
   </mat-toolbar>
   </p>
-<app-destinatario *ngIf="destinatario" (close)="closeModuloDestinatario()"></app-destinatario>
+<app-destinatario [moduloTransferencia]="bModuloTransferencia" *ngIf="destinatario" (close)="closeModuloDestinatario()"></app-destinatario>
 
 
