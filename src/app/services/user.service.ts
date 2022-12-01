@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { GLOBAL } from './global'
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from "../models/user";
+import { Parser } from "@angular/compiler";
 
 @Injectable()
 export class UserService {
@@ -35,7 +36,7 @@ export class UserService {
             this.identity = null;
             
         }
-        return this.identity;
+        return JSON.parse(this.identity);
     }
 
     getToken(){
@@ -82,4 +83,17 @@ export class UserService {
 
         return this._http.get<any>(this.url +'getDestinatarios',{headers: headers});
     }
+
+    saveTransferencia(user: any){      
+
+        let json = JSON.stringify(user);
+        let params = json;
+
+        let headers = new HttpHeaders({
+            'Content-Type':'application/json',
+            'Authorization':this.getToken()});
+
+        return this._http.post<any>(this.url +'transferencia',params,{headers: headers});
+    }
+
 }

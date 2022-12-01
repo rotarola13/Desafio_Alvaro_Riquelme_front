@@ -4,6 +4,8 @@ import { Destinatario } from 'src/app/models/destinatario';
 import { BanksService } from 'src/app/services/banks.service';
 import { UserService } from 'src/app/services/user.service';
 import { validate, clean, format, getCheckDigit } from 'rut.js'
+import { User } from 'src/app/models/user';
+import { Historico } from 'src/app/models/historico';
 
 @Component({
   selector: 'app-destinatario',
@@ -91,6 +93,27 @@ export class DestinatarioComponent implements OnInit {
   }
 
   saveTransferencia() {
+    var user = this._userService.getIdentity();
+    var newSaldo= parseInt(user.saldo) - this.montoTransferencia;
+    user.saldo=newSaldo;
+    
+    this._userService.saveTransferencia(user).subscribe(
+      response => {
 
+        if (!response.user._id) {
+          //alerta que no se ha registrado
+        } else {
+          var historico = new Historico();
+          this.cerrarDestinatario();
+        }
+      },
+      error => {
+        var errorMessage = <any>error.error.message;
+        if (errorMessage != null) {
+          this.errorMessage = error.error.message
+          //console.log(errorMessage);
+        }
+      }
+    );
   }
 }
