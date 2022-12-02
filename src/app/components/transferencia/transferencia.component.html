@@ -9,57 +9,63 @@
         <form #destinatarioForm="ngForm" (ngSubmit)="onSubmit()">
             <div class="row mt-3">
                 <div class="col-lg-6">
-                    <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
-                        <mat-form-field class="example-full-width w-100">
-                            <mat-label>RUT</mat-label>
-                            <input required mask="00.000.000-0" (blur)="validarRUT()" #rut="ngModel" name="rut"
-                                [(ngModel)]="destinatario.rut" type="text" matInput>
-                        </mat-form-field>
-                    </label>
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>RUT</mat-label>
+                        <input required mask="00.000.000-0" #rut="ngModel" name="rut" [(ngModel)]="destinatario.rut"
+                            type="text" matInput>
+                            <mat-error *ngIf="rut.hasError('required')">
+                                RUT es <strong>requerido</strong>
+                            </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="col-lg-6 ">
-                    <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
-                        <mat-form-field class="example-full-width w-100">
-                            <mat-label>Nombre</mat-label>
-                            <input required #name="ngModel" name="name" [(ngModel)]="destinatario.name" type="text"
-                                matInput>
-                        </mat-form-field>
-                    </label>
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input required #name="ngModel" name="name" [(ngModel)]="destinatario.name" type="text"
+                            matInput>
+                            <mat-error *ngIf="name.hasError('required')">
+                                Nombre es <strong>requerido</strong>
+                            </mat-error>
+                    </mat-form-field>
                 </div>
-                <div class="col-lg-6 mt-4">
-                    <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
-                        <mat-form-field class="example-full-width w-100">
-                            <mat-label>Correo</mat-label>
-                            <input required #email="ngModel" name="email" [(ngModel)]="destinatario.email" type="text"
-                                matInput>
-                        </mat-form-field>
-                    </label>
+                <div class="col-lg-6 mt-2">
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>Correo</mat-label>
+                        <input required #email="ngModel" name="email" [(ngModel)]="destinatario.email" type="text"
+                            matInput>
+                        <mat-error *ngIf="email.hasError('required')">
+                            Correo es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
-                <div class="col-lg-6 mt-4">
-                    <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
-                        <mat-form-field class="example-full-width w-100">
-                            <mat-label>Telefono</mat-label>
-                            <input required mask="000000000" #telefono="ngModel" name="telefono" [(ngModel)]="destinatario.telefono"
-                                type="text" matInput>
-                        </mat-form-field>
-                    </label>
+                <div class="col-lg-6 mt-2">
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>Telefono</mat-label>
+                        <input required mask="000000000" #telefono="ngModel" name="telefono"
+                            [(ngModel)]="destinatario.telefono" type="text" matInput>
+                            <mat-error *ngIf="telefono.hasError('required')">
+                                Telefono es <strong>requerido</strong>
+                            </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="mt-4 col-lg-6">
-                        <mat-form-field appearance="fill" class=" widthSelect ms-3 col-lg-11">
-                            <mat-label>Choose an option</mat-label>
+                    <div class="mt-2 col-lg-6">
+                        <mat-form-field appearance="fill" class=" widthSelect col-lg-11">
+                            <mat-label>Banco</mat-label>
                             <mat-select class="col-lg-6" required #bancoDestino="ngModel" name="bancoDestino"
                                 [(ngModel)]="destinatario.bancoDestino">
                                 <mat-option *ngFor="let banks of banks" [value]="banks.name">
                                     {{banks.name}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="bancoDestino.hasError('required')">
+                                Banco es <strong>requerido</strong>
+                            </mat-error>
                         </mat-form-field>
-
                     </div>
-                    <div class="mt-4 col-lg-6">
+                    <div class="mt-2 col-lg-6">
                         <mat-form-field appearance="fill" class="widthSelect marginleftCustom col-lg-11">
-                            <mat-label>Choose an option</mat-label>
+                            <mat-label>Tipo Cuenta</mat-label>
                             <mat-select required #tipoCuenta="ngModel" name="tipoCuenta"
                                 [(ngModel)]="destinatario.tipoCuenta">
                                 <mat-option *ngFor="let tipoCuentasBanco of tipoCuentasBanco"
@@ -67,18 +73,24 @@
                                     {{tipoCuentasBanco.description}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="tipoCuenta.hasError('required')">
+                                Tipo Cuenta es <strong>requerido</strong>
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-lg-6 mt-1">
-                    <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
-                        <mat-form-field class="example-full-width w-100">
-                            <mat-label>N° De Cuenta</mat-label>
-                            <input required #numeroCuenta="ngModel" name="numeroCuenta"
-                                [(ngModel)]="destinatario.numeroCuenta" mask="000000000000" placeholder="000111111111" type="text" matInput>
-                        </mat-form-field>
-                    </label>
+                    <mat-form-field class="example-full-width w-100">
+                        <mat-label>N° De Cuenta</mat-label>
+                        <input required #numeroCuenta="ngModel" name="numeroCuenta"
+                            [(ngModel)]="destinatario.numeroCuenta" mask="000000000000" placeholder="000111111111"
+                            type="text" matInput>
+                            <mat-error *ngIf="numeroCuenta.hasError('required')">
+                                Numero cuenta es <strong>requerido</strong>
+                            </mat-error>
+                    </mat-form-field>
                 </div>
+
             </div>
 
             <div class="mt-4 row justify-content-center">
@@ -111,8 +123,7 @@
             </div>
         </cdk-virtual-scroll-viewport>
         <div class="mt-3 row justify-content-center">
-            <button mat-raised-button color="basic" class="col-lg-5"
-                (click)="cerrarDestinatario()">Cerrar</button>
+            <button mat-raised-button color="basic" class="col-lg-5" (click)="cerrarDestinatario()">Cerrar</button>
         </div>
     </div>
 </div>
@@ -132,19 +143,20 @@
             <mat-label><b>Monto</b></mat-label>
             <div class="col-lg-9 mt-2">
                 <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
-                    <mat-form-field class="example-full-width w-100">                     
-                        <input required #monto="ngModel" name="monto"
-                        [(ngModel)]="montoTransferencia" type="number" matInput>
+                    <mat-form-field class="example-full-width w-100">
+                        <input required #monto="ngModel" name="monto" [(ngModel)]="montoTransferencia" type="number"
+                            (blur)="validaMontoMaximo($event)" matInput>
                     </mat-form-field>
                 </label>
             </div>
+            <br>
+            <mat-label><b>Monto Disponible: ${{user.saldo}}</b></mat-label>
         </div>
         <div class="ms-2 mt-3 row justify-content-center">
-            <button mat-raised-button color="basic" class="col-lg-5"
-                (click)="volverDestinatario()">Volver</button>
+            <button mat-raised-button color="basic" class="col-lg-5" (click)="volverDestinatario()">Volver</button>
 
-                <button mat-raised-button color="primary" class="ms-2 col-lg-5"
-                (click)="saveTransferencia()">Transferir</button>
+            <button mat-raised-button color="primary" class="ms-2 col-lg-5" (click)="saveTransferencia()"
+                [disabled]="!validMax">Transferir</button>
         </div>
     </div>
 </div>

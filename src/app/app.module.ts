@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
-import { DestinatarioComponent } from './components/destinatario/destinatario.component';
+
 import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -19,18 +19,24 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { NgxMaskModule} from 'ngx-mask'
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { HistoricoComponent } from './components/historico/historico.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { TransferenciaComponent } from './components/transferencia/transferencia.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DestinatarioComponent,
+    TransferenciaComponent,
     HomeComponent,
-    // DestinatarioComponent,
-    // RegistroComponent,
-    // HistoricoComponent,
-    // TransferenciaComponent
+    HistoricoComponent,
+    SnackbarComponent,    
+    
   ],
   imports: [
     BrowserModule,
@@ -46,10 +52,13 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatMenuModule,
     MatTooltipModule,
     NgxMaskModule.forRoot(),
-    ScrollingModule
+    ScrollingModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSnackBarModule
     
   ],
-  providers: [],
+  providers: [SnackbarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

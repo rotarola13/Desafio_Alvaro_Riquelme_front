@@ -1,31 +1,33 @@
 <p>
-    <mat-toolbar>
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-                <mat-icon> attach_money</mat-icon>
-              <span (click)="moduloTransferencia()">Transferencia</span>
-            </button> 
-            <button mat-menu-item>
-                <mat-icon>supervisor_account</mat-icon>
-              <span (click)="moduloDestinatrio()">Destinatario</span>
-            </button>          
-            <button mat-menu-item>
-                <mat-icon>history</mat-icon>
-              <span>Historico</span>
-            </button>
-          </mat-menu>
+  <mat-toolbar>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon> attach_money</mat-icon>
+        <span (click)="moduloTransferencia()">Transferencia</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>supervisor_account</mat-icon>
+        <span (click)="moduloDestinatrio()">Destinatario</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>history</mat-icon>
+        <span (click)="moduloHistorico()">Historico</span>
+      </button>
+    </mat-menu>
     <span>Menu</span>
     <span class="spacer"></span>
     <button (click)="logout()" mat-icon-button class="example-icon favorite-icon" #tooltip="matTooltip"
-    matTooltip="Cerrar Sessión">    
-        <mat-icon>cancel</mat-icon> 
+      matTooltip="Cerrar Sessión">
+      <mat-icon>cancel</mat-icon>
     </button>
-    
-  </mat-toolbar>
-  </p>
-<app-destinatario [moduloTransferencia]="bModuloTransferencia" *ngIf="destinatario" (close)="closeModuloDestinatario()"></app-destinatario>
 
+  </mat-toolbar>
+</p>
+<app-transferencia [moduloTransferencia]="bModuloTransferencia" *ngIf="destinatario" (close)="closeModuloDestinatario()"
+  (sessionExpired)="sessionExp()"></app-transferencia>
+
+<app-historico (sessionExpired)="sessionExp()" *ngIf="historico" (close)="closeModuloHistorico($event)"></app-historico>
 
