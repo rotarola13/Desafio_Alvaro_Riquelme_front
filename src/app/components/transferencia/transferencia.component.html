@@ -3,7 +3,7 @@
     <div class="box-login shadow-lg border p-4 rounded">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="text-center">Nuevo Destinatario</h1>
+                <h1 class="text-center">New Recipient</h1>
             </div>
         </div>
         <form #destinatarioForm="ngForm" (ngSubmit)="onSubmit()">
@@ -14,44 +14,44 @@
                         <input required mask="00.000.000-0" #rut="ngModel" name="rut" [(ngModel)]="destinatario.rut"
                             type="text" matInput>
                             <mat-error *ngIf="rut.hasError('required')">
-                                RUT es <strong>requerido</strong>
+                                RUT is <strong>required</strong>
                             </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 ">
                     <mat-form-field class="example-full-width w-100">
-                        <mat-label>Nombre</mat-label>
+                        <mat-label>Name</mat-label>
                         <input required #name="ngModel" name="name" [(ngModel)]="destinatario.name" type="text"
                             matInput>
                             <mat-error *ngIf="name.hasError('required')">
-                                Nombre es <strong>requerido</strong>
+                                Name is <strong>required</strong>
                             </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 mt-2">
                     <mat-form-field class="example-full-width w-100">
-                        <mat-label>Correo</mat-label>
+                        <mat-label>Mail</mat-label>
                         <input required #email="ngModel" name="email" [(ngModel)]="destinatario.email" type="text"
                             matInput>
                         <mat-error *ngIf="email.hasError('required')">
-                            Correo es <strong>requerido</strong>
+                            Mail is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 mt-2">
                     <mat-form-field class="example-full-width w-100">
-                        <mat-label>Telefono</mat-label>
+                        <mat-label>Telephone</mat-label>
                         <input required mask="000000000" #telefono="ngModel" name="telefono"
                             [(ngModel)]="destinatario.telefono" type="text" matInput>
                             <mat-error *ngIf="telefono.hasError('required')">
-                                Telefono es <strong>requerido</strong>
+                                Telephone is <strong>required</strong>
                             </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row col-lg-12">
                     <div class="mt-2 col-lg-6">
                         <mat-form-field appearance="fill" class=" widthSelect col-lg-11">
-                            <mat-label>Banco</mat-label>
+                            <mat-label>Bank</mat-label>
                             <mat-select class="col-lg-6" required #bancoDestino="ngModel" name="bancoDestino"
                                 [(ngModel)]="destinatario.bancoDestino">
                                 <mat-option *ngFor="let banks of banks" [value]="banks.name">
@@ -59,13 +59,13 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="bancoDestino.hasError('required')">
-                                Banco es <strong>requerido</strong>
+                                Bank is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="mt-2 col-lg-6">
                         <mat-form-field appearance="fill" class="widthSelect marginleftCustom col-lg-11">
-                            <mat-label>Tipo Cuenta</mat-label>
+                            <mat-label>Account Type</mat-label>
                             <mat-select required #tipoCuenta="ngModel" name="tipoCuenta"
                                 [(ngModel)]="destinatario.tipoCuenta">
                                 <mat-option *ngFor="let tipoCuentasBanco of tipoCuentasBanco"
@@ -74,19 +74,19 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="tipoCuenta.hasError('required')">
-                                Tipo Cuenta es <strong>requerido</strong>
+                                Account Type is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-lg-6 mt-1">
                     <mat-form-field class="example-full-width w-100">
-                        <mat-label>N° De Cuenta</mat-label>
+                        <mat-label>Account Number</mat-label>
                         <input required #numeroCuenta="ngModel" name="numeroCuenta"
                             [(ngModel)]="destinatario.numeroCuenta" mask="000000000000" placeholder="000111111111"
                             type="text" matInput>
                             <mat-error *ngIf="numeroCuenta.hasError('required')">
-                                Numero cuenta es <strong>requerido</strong>
+                                Account number is <strong>required</strong>
                             </mat-error>
                     </mat-form-field>
                 </div>
@@ -94,9 +94,9 @@
             </div>
 
             <div class="mt-4 row justify-content-center">
-                <button mat-raised-button color="basic" class="col-lg-5" (click)="cerrarDestinatario()">Cerrar</button>
+                <button mat-raised-button color="basic" class="col-lg-5" (click)="cerrarDestinatario()">Close</button>
                 <button mat-raised-button color="primary" [disabled]="destinatarioForm.invalid" type="submit"
-                    class="col-lg-5 ms-2">Crear</button>
+                    class="col-lg-5 ms-2">Save</button>
             </div>
         </form>
     </div>
@@ -105,42 +105,41 @@
 <div *ngIf="moduloTransferencia && !moduloRealizaTransferencia" class="contenedor row justify-content-center mt-3">
     <div class="box-login-transferencia shadow-lg border p-4 rounded">
         <div class="col-lg-12">
-            <h1 class="text-center">Transferencia</h1>
+            <h1 class="text-center">Transfer</h1>
         </div>
-        <mat-label><b>Cuenta Destino</b></mat-label>
+        <mat-label><b>Destination Account</b></mat-label>
         <cdk-virtual-scroll-viewport itemSize="50" class="viewport ">
             <div *cdkVirtualFor="let destinatarioCard of destinatarioCard" class="item ">
-                <mat-card class="card mt-1 shadow-lg border rounded" (click)="realizarTransferencia(destinatarioCard)">
+                <mat-card class="card mt-1 shadow-lg border rounded backcolorCard" (click)="realizarTransferencia(destinatarioCard)">
                     <mat-card-header>
                         <mat-card-title-group>
                             <mat-card-title>{{destinatarioCard.name}}</mat-card-title>
-                            <mat-card-subtitle>{{destinatarioCard.rut}}</mat-card-subtitle>
-                            <mat-card-subtitle>{{destinatarioCard.email}}</mat-card-subtitle>
-                            <mat-card-subtitle>{{destinatarioCard.numeroCuenta}}</mat-card-subtitle>
+                            <mat-card-subtitle class="LetterColor">{{destinatarioCard.rut}}</mat-card-subtitle>
+                            <mat-card-subtitle class="LetterColor">{{destinatarioCard.email}}</mat-card-subtitle>
+                            <mat-card-subtitle class="LetterColor">{{destinatarioCard.numeroCuenta}}</mat-card-subtitle>
                         </mat-card-title-group>
                     </mat-card-header>
                 </mat-card>
             </div>
         </cdk-virtual-scroll-viewport>
         <div class="mt-3 row justify-content-center">
-            <button mat-raised-button color="basic" class="col-lg-5" (click)="cerrarDestinatario()">Cerrar</button>
+            <button mat-raised-button color="basic" class="col-lg-5" (click)="cerrarDestinatario()">Close</button>
         </div>
     </div>
 </div>
-
 <!-- Modulo realiza Transferencia -->
 <div *ngIf="moduloRealizaTransferencia" class="contenedor row justify-content-center mt-3">
     <div class="box-login-transferencia2 shadow-lg border p-4 rounded">
         <div class="col-lg-12">
-            <h2 class="text-left">Detalle del destinatario</h2>
+            <h2 class="text-left">Recipient detail</h2>
         </div>
         <div>
-            <mat-label><b>Nombre: </b> {{detalleDestinatario.name}}</mat-label> <br>
-            <mat-label><b>Correo: </b>{{detalleDestinatario.email}}</mat-label> <br>
-            <mat-label><b>Banco: </b> {{detalleDestinatario.bancoDestino}}</mat-label> <br>
-            <mat-label><b>Tipo de cuenta: </b> {{detalleDestinatario.tipoCuenta.description}}</mat-label> <br>
+            <mat-label><b>Name: </b> {{detalleDestinatario.name}}</mat-label> <br>
+            <mat-label><b>Mail: </b>{{detalleDestinatario.email}}</mat-label> <br>
+            <mat-label><b>Bank: </b> {{detalleDestinatario.bancoDestino}}</mat-label> <br>
+            <mat-label><b>Type of account: </b> {{detalleDestinatario.tipoCuenta.description}}</mat-label> <br>
             <br>
-            <mat-label><b>Monto</b></mat-label>
+            <mat-label><b>Amount</b></mat-label>
             <div class="col-lg-9 mt-2">
                 <label class="mdc-text-field mdc-text-field--outlined w-100 text-field-pass">
                     <mat-form-field class="example-full-width w-100">
@@ -150,13 +149,17 @@
                 </label>
             </div>
             <br>
-            <mat-label><b>Monto Disponible: ${{user.saldo}}</b></mat-label>
+            <mat-label><b>Balance Available: ${{user.saldo}}</b></mat-label>
         </div>
         <div class="ms-2 mt-3 row justify-content-center">
-            <button mat-raised-button color="basic" class="col-lg-5" (click)="volverDestinatario()">Volver</button>
+            <button mat-raised-button color="basic" class="col-lg-5" (click)="volverDestinatario()">Back</button>
 
             <button mat-raised-button color="primary" class="ms-2 col-lg-5" (click)="saveTransferencia()"
-                [disabled]="!validMax">Transferir</button>
+                [disabled]="!validMax">Transfer</button>
         </div>
     </div>
+</div>
+
+<div *ngIf="spinner" class="spinnerDIV">
+    <mat-spinner  class="spinner spinner-window"></mat-spinner>
 </div>

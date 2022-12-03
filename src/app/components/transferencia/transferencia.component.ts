@@ -35,7 +35,8 @@ export class TransferenciaComponent implements OnInit {
   valid: boolean = false;
   user: any;
   validMax: any = false;
-  global: any
+  global: any;
+  public spinner:any=false;
 
 
   constructor(private _banksService: BanksService, private _userService: UserService,
@@ -45,6 +46,7 @@ export class TransferenciaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner=true;
     this.user = this._userService.getIdentity();
 
     this._banksService.getBanks().subscribe(
@@ -69,12 +71,15 @@ export class TransferenciaComponent implements OnInit {
             //console.log(errorMessage);
           }
         }
+        this.spinner=false;
       }
     );
 
-    this._transferenciaService.getDestinatarios().subscribe(
+
+    this._transferenciaService.getDestinatarios(this.user._id).subscribe(
       response => {
         this.destinatarioCard = response.destinatario;
+        this.spinner=false;
       },
       error => {
         if (error.status = 401) {
@@ -88,6 +93,7 @@ export class TransferenciaComponent implements OnInit {
             //console.log(errorMessage);
           }
         }
+        this.spinner=false;
 
       }
     );
@@ -98,14 +104,18 @@ export class TransferenciaComponent implements OnInit {
   }
 
   public onSubmit() {
-
+    this.spinner=true;
     this.valid = this.validarRUT(this.destinatario.rut);
     if (!this.valid) {
+      console.log(this.destinatario);
       this.snackbar.openSnackBar(this.global.invalidRUT, 'Close');
+      this.spinner=false;
     }
     else {
+      this.destinatario.user =this.user._id;
       this._transferenciaService.registrarDestinatario(this.destinatario).subscribe(
         response => {
+          this.spinner=false;
           this.snackbar.openSnackBar(this.global.successfullyDest, 'Close');
           this.cerrarDestinatario();
         },
@@ -120,6 +130,7 @@ export class TransferenciaComponent implements OnInit {
               this.snackbar.openSnackBar(error.error.message, 'Close');
             }
           }
+          this.spinner=false;
 
         }
       );
@@ -143,6 +154,7 @@ export class TransferenciaComponent implements OnInit {
   }
 
   saveTransferencia() {
+    this.spinner=true;
     var user = this._userService.getIdentity();
     var newSaldo = parseInt(user.saldo) - this.montoTransferencia;
     user.saldo = newSaldo;
@@ -155,12 +167,13 @@ export class TransferenciaComponent implements OnInit {
           this.detalleDestinatario.rut,
           this.detalleDestinatario.bancoDestino,
           this.detalleDestinatario.tipoCuenta._id,
-          this.montoTransferencia.toString()
+          this.montoTransferencia.toString(),
+          this.user._id
         );
 
         this._transferenciaService.saveHistoricoTransferencia(historico).subscribe(
           response => {
-
+            this.spinner=false;
             this.snackbar.openSnackBar(this.global.transferSuccessfully, 'Close');
             this.cerrarDestinatario();
 
@@ -177,6 +190,7 @@ export class TransferenciaComponent implements OnInit {
 
               }
             }
+            this.spinner=false;
           }
         );
 
@@ -192,6 +206,7 @@ export class TransferenciaComponent implements OnInit {
             this.snackbar.openSnackBar(error.error.message, 'Close');
           }
         }
+        this.spinner=false;
       }
     );
   }

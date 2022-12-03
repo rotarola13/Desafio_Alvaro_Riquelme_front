@@ -37,13 +37,13 @@ export class TransferenciaService {
     }
     
     
-    getDestinatarios(){
-      
+    getDestinatarios(userId:string){
+       
         let headers = new HttpHeaders({
             'Content-Type':'application/json',
             'Authorization':this.getToken()});
     
-        return this._http.get<any>(this.url +'getDestinatarios',{headers: headers});
+        return this._http.get<any>(this.url +'getDestinatarios/'+userId,{headers: headers});
     }
     
     saveTransferencia(user: any){      
@@ -83,13 +83,13 @@ export class TransferenciaService {
 
     }    
 
-    getHistorico(){
+    getHistorico(userId:string){
       
         let headers = new HttpHeaders({
             'Content-Type':'application/json',
             'Authorization':this.getToken()});
     
-        return this._http.get<any>(this.url +'historicoFind',{headers: headers});
+        return this._http.get<any>(this.url +'historicoFind/'+userId,{headers: headers});
     }
 
 

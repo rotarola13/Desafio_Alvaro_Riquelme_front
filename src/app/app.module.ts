@@ -17,7 +17,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon'
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { NgxMaskModule} from 'ngx-mask'
+import { NgxMaskModule} from 'ngx-mask';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { HistoricoComponent } from './components/historico/historico.component';
 import {MatTableModule} from '@angular/material/table';
@@ -25,6 +25,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { TransferenciaComponent } from './components/transferencia/transferencia.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HeaderComponent } from './components/header/header.component';
 
 
 
@@ -35,7 +37,8 @@ import { TransferenciaComponent } from './components/transferencia/transferencia
     TransferenciaComponent,
     HomeComponent,
     HistoricoComponent,
-    SnackbarComponent,    
+    SnackbarComponent,
+    HeaderComponent,    
     
   ],
   imports: [
@@ -55,7 +58,8 @@ import { TransferenciaComponent } from './components/transferencia/transferencia
     ScrollingModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
     
   ],
   providers: [SnackbarComponent],

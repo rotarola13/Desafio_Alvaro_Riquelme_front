@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   destinatario:  boolean=false;
   bModuloTransferencia: boolean=false;
   historico: any=false;
+  header:boolean=true;
   
 
   constructor(private _userService: UserService, public snackbar: SnackbarComponent) {    
@@ -35,25 +36,30 @@ export class HomeComponent implements OnInit {
   }
 
   moduloDestinatrio(){
+    this.header=false;
     this.destinatario=true
     this.bModuloTransferencia=false;
     this.historico=false;
   }
 
   moduloTransferencia(){
+    this.header=false;
     this.destinatario=true
     this.bModuloTransferencia=true;
     this.historico=false;
   }
 
   closeModuloDestinatario(){
+    this.header=true;
     this.destinatario=false;
   }
   closeModuloHistorico(event:any){
+    this.header=true;
     this.historico=event;
   }
 
   moduloHistorico(){
+    this.header=false;
     this.historico=true;
   }
 

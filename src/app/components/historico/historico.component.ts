@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Historico } from 'src/app/models/historico';
 import { GLOBAL } from 'src/app/services/global';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
+import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Component({
@@ -20,10 +21,14 @@ export class HistoricoComponent implements OnInit,AfterViewInit {
   datahist: any;
   dataSource = new MatTableDataSource<any>([]);
   global:any
+  public spinner:any=false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  user: any;
   
-  constructor(private _transferenciaService: TransferenciaService, public snackbar: SnackbarComponent) {
+  constructor(private _userService: UserService,
+    private _transferenciaService: TransferenciaService, 
+    public snackbar: SnackbarComponent) {
     this.global =GLOBAL; 
   }
   ngAfterViewInit(){
@@ -31,7 +36,9 @@ export class HistoricoComponent implements OnInit,AfterViewInit {
   }
 
   ngOnInit(){
-    this._transferenciaService.getHistorico().subscribe(
+    this.user = this._userService.getIdentity();
+    this.spinner=true;
+    this._transferenciaService.getHistorico( this.user._id).subscribe(
       response => {
           console.log(response.historico.length);
         if (response.historico.length >= 1) {
@@ -41,7 +48,8 @@ export class HistoricoComponent implements OnInit,AfterViewInit {
         console.log(response.historico);
         } else {
           this.snackbar.openSnackBar(this.global.noHistoryAvailable, 'Close');          
-        }       
+        }  
+        this.spinner=false;     
       },
       error => {
         if (error.status = 401) {
@@ -50,6 +58,7 @@ export class HistoricoComponent implements OnInit,AfterViewInit {
         } else {
           this.snackbar.openSnackBar(error.error.message, 'Close');
         }
+        this.spinner=false; 
       }
     );
   }

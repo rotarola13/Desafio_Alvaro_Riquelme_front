@@ -5,7 +5,8 @@ export class Historico{
         public rut?:string,
         public bancoDestino?:string,
         public tipoCuenta?:string,
-        public monto?:string
+        public monto?:string,
+        public user?:string
         
     ){}
 }

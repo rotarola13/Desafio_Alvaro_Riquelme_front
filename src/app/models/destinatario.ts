@@ -7,7 +7,8 @@ export class Destinatario{
         public telefono:string,
         public bancoDestino:string,
         public tipoCuenta:string,
-        public numeroCuenta:string
+        public numeroCuenta:string,
+        public user?:string
         
     ){}
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { User } from 'src/app/models/user';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,10 @@ public identity: any;
 public token: any;
 public errorMessage: any;
 global:any
+public spinner:any=false;
+
+color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'determinate';
 
 constructor(private _userService: UserService,public snackbar: SnackbarComponent) {
   this.user = new User('', '', '', '', 'ROLE_USER', '', 0);
@@ -33,6 +39,7 @@ public crearCuenta(){
 }
 
 public onSubmit() {
+  this.spinner=true
   this._userService.signUp(this.user,false).subscribe(
     response => {
       let identity = response.user;
@@ -52,11 +59,13 @@ public onSubmit() {
             } else {             
               localStorage.setItem('token',token);            
             }
+            this.spinner=false
           },
           error => {
             var errorMessage = <any>error.error.message;
             if (errorMessage != null) {
-              this.errorMessage = error.error.message              
+              this.errorMessage = error.error.message   
+              this.spinner=false           
               this.snackbar.openSnackBar(error.error.message, 'Close');
             }
           }
@@ -72,6 +81,7 @@ public onSubmit() {
         } else {
           this.snackbar.openSnackBar(error.error.message, 'Close');       
         }
+        this.spinner=false
               
       }
     }
