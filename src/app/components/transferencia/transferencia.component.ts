@@ -1,16 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Banks } from 'src/app/models/banks';
 import { Destinatario } from 'src/app/models/destinatario';
 import { BanksService } from 'src/app/services/banks.service';
 import { UserService } from 'src/app/services/user.service';
-import { validate, clean, format, getCheckDigit } from 'rut.js'
-import { User } from 'src/app/models/user';
+import { validate, } from 'rut.js'
 import { Historico } from 'src/app/models/historico';
-
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
 import { GLOBAL } from 'src/app/services/global';
-
 
 @Component({
   selector: 'app-transferencia',
@@ -36,7 +32,7 @@ export class TransferenciaComponent implements OnInit {
   user: any;
   validMax: any = false;
   global: any;
-  public spinner:any=false;
+  public spinner: any = false;
 
 
   constructor(private _banksService: BanksService, private _userService: UserService,
@@ -46,7 +42,7 @@ export class TransferenciaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinner=true;
+    this.spinner = true;
     this.user = this._userService.getIdentity();
 
     this._banksService.getBanks().subscribe(
@@ -54,7 +50,12 @@ export class TransferenciaComponent implements OnInit {
         this.banks = response.banks;
       }
     );
+    
+    this.getTipoCuenta();
+    this.getDestinatarios();
+  }
 
+  getTipoCuenta() {
     this._transferenciaService.getTipoCuenta().subscribe(
       response => {
         this.tipoCuentasBanco = response.tipoCuenta;
@@ -67,19 +68,19 @@ export class TransferenciaComponent implements OnInit {
           var errorMessage = <any>error.error.message;
           if (errorMessage != null) {
             this.errorMessage = error.error.message
-            this.snackbar.openSnackBar(error.error.message, 'Close');
-            //console.log(errorMessage);
+            this.snackbar.openSnackBar(error.error.message, 'Close');            
           }
         }
-        this.spinner=false;
+        this.spinner = false;
       }
     );
+  }
 
-
+  getDestinatarios() {
     this._transferenciaService.getDestinatarios(this.user._id).subscribe(
       response => {
         this.destinatarioCard = response.destinatario;
-        this.spinner=false;
+        this.spinner = false;
       },
       error => {
         if (error.status = 401) {
@@ -89,11 +90,10 @@ export class TransferenciaComponent implements OnInit {
           var errorMessage = <any>error.error.message;
           if (errorMessage != null) {
             this.errorMessage = error.error.message
-            this.snackbar.openSnackBar(error.error.message, 'Close');
-            //console.log(errorMessage);
+            this.snackbar.openSnackBar(error.error.message, 'Close');            
           }
         }
-        this.spinner=false;
+        this.spinner = false;
 
       }
     );
@@ -104,18 +104,17 @@ export class TransferenciaComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.spinner=true;
+    this.spinner = true;
     this.valid = this.validarRUT(this.destinatario.rut);
-    if (!this.valid) {
-      console.log(this.destinatario);
+    if (!this.valid) {      
       this.snackbar.openSnackBar(this.global.invalidRUT, 'Close');
-      this.spinner=false;
+      this.spinner = false;
     }
     else {
-      this.destinatario.user =this.user._id;
+      this.destinatario.user = this.user._id;
       this._transferenciaService.registrarDestinatario(this.destinatario).subscribe(
         response => {
-          this.spinner=false;
+          this.spinner = false;
           this.snackbar.openSnackBar(this.global.successfullyDest, 'Close');
           this.cerrarDestinatario();
         },
@@ -130,7 +129,7 @@ export class TransferenciaComponent implements OnInit {
               this.snackbar.openSnackBar(error.error.message, 'Close');
             }
           }
-          this.spinner=false;
+          this.spinner = false;
 
         }
       );
@@ -154,7 +153,7 @@ export class TransferenciaComponent implements OnInit {
   }
 
   saveTransferencia() {
-    this.spinner=true;
+    this.spinner = true;
     var user = this._userService.getIdentity();
     var newSaldo = parseInt(user.saldo) - this.montoTransferencia;
     user.saldo = newSaldo;
@@ -173,7 +172,7 @@ export class TransferenciaComponent implements OnInit {
 
         this._transferenciaService.saveHistoricoTransferencia(historico).subscribe(
           response => {
-            this.spinner=false;
+            this.spinner = false;
             this.snackbar.openSnackBar(this.global.transferSuccessfully, 'Close');
             this.cerrarDestinatario();
 
@@ -190,7 +189,7 @@ export class TransferenciaComponent implements OnInit {
 
               }
             }
-            this.spinner=false;
+            this.spinner = false;
           }
         );
 
@@ -206,7 +205,7 @@ export class TransferenciaComponent implements OnInit {
             this.snackbar.openSnackBar(error.error.message, 'Close');
           }
         }
-        this.spinner=false;
+        this.spinner = false;
       }
     );
   }
@@ -221,9 +220,33 @@ export class TransferenciaComponent implements OnInit {
       } else {
         this.validMax = true;
       }
-
     }
+  }
 
+  remove(destinatario: Destinatario) {
+   
+    this.spinner = true;
+    this._transferenciaService.removeDestinatario(destinatario).subscribe(
+      response => {
+        this.spinner = false;
+        this.snackbar.openSnackBar(this.global.deletedSuccessfully, 'Close');
+        this.getDestinatarios();
 
+      },
+      error => {
+        var errorMessage = <any>error.error.message;
+        if (error.status = 401) {
+          this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
+          this.sessionExpired.emit(true);
+        } else {
+          if (errorMessage != null) {
+            this.errorMessage = error.error.message
+            this.snackbar.openSnackBar(error.error.message, 'Close');
+
+          }
+        }
+        this.spinner = false;
+      }
+    );
   }
 }

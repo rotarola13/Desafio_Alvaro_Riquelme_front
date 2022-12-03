@@ -3,6 +3,7 @@ import { GLOBAL } from './global'
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from "../models/user";
 import { Parser } from "@angular/compiler";
+import { Destinatario } from "../models/destinatario";
 
 @Injectable()
 export class TransferenciaService {
@@ -91,6 +92,17 @@ export class TransferenciaService {
     
         return this._http.get<any>(this.url +'historicoFind/'+userId,{headers: headers});
     }
+
+    removeDestinatario(destinatario: Destinatario){      
+        let json = JSON.stringify(destinatario);
+        let params = json;
+    
+        let headers = new HttpHeaders({
+            'Content-Type':'application/json',
+            'Authorization':this.getToken()});
+    
+        return this._http.put<any>(this.url +'updateDestinatario',params,{headers: headers});
+    }  
 
 
 }

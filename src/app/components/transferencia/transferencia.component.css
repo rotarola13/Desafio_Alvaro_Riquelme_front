@@ -61,16 +61,19 @@
 .viewport {
     height: 81%;
     width: 100%;
-    border: 1px solid black;
+   
   }
   
   .item {
     height: 20%;
   }
   .card {
-    cursor: pointer;
-    max-width: 400px;
-    margin-bottom: 8px;
+    cursor: pointer;    
+    margin-bottom: 4px;
+  }
+
+  .cursorTrash{
+    cursor: pointer;    
   }
 
   .error {

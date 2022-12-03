@@ -1,6 +1,11 @@
 <div class="contenedor row justify-content-center mt-3">
     <div class="box-login shadow-lg border p-4 rounded">       
         <div class="mat-elevation-z8">
+            <button *ngIf="datahist >= 1" style="cursor: pointer" mat-button color="primary" (click)="exportexcel()">
+                <i class="bi bi-file-earmark-excel-fill"></i>
+                Export Excel
+            </button>
+                       
             <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Nombre destinatario Column -->

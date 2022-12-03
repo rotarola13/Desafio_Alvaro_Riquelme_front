@@ -4,17 +4,17 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="moduloTransferencia()">
         <mat-icon> attach_money</mat-icon>
-        <span (click)="moduloTransferencia()">Transfer</span>
+        <span>Transfer</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="moduloDestinatrio()">
         <mat-icon>supervisor_account</mat-icon>
-        <span (click)="moduloDestinatrio()">Recipient</span>
+        <span >Recipient</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="moduloHistorico()">
         <mat-icon>history</mat-icon>
-        <span (click)="moduloHistorico()">History</span>
+        <span >History</span>
       </button>
     </mat-menu>
     <span>Menu</span>
@@ -23,11 +23,11 @@
       matTooltip="Close Session">
       <mat-icon>cancel</mat-icon>
     </button>
-
-  </mat-toolbar>
- 
+  </mat-toolbar> 
 </p>
+
 <app-header *ngIf="header"></app-header>
+
 <app-transferencia [moduloTransferencia]="bModuloTransferencia" *ngIf="destinatario" (close)="closeModuloDestinatario()"
   (sessionExpired)="sessionExp()"></app-transferencia>
 

@@ -6,7 +6,8 @@ export class Historico{
         public bancoDestino?:string,
         public tipoCuenta?:string,
         public monto?:string,
-        public user?:string
+        public user?:string,
+        public fechaTransferencia?:string,
         
     ){}
 }

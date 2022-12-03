@@ -1,5 +1,6 @@
 export var GLOBAL = {
-    url:'https://desafioalvaroriquelmeback-production.up.railway.app/api/',
+    url:'http://localhost:5000/api/',
+     // url:'https://desafioalvaroriquelmeback-production.up.railway.app/api/',
     urlBanks:"https://bast.dev/api/banks.php",
     ip:'127.0.0.1',
 
@@ -12,6 +13,7 @@ export var GLOBAL = {
     userIdentified:"The user is not correctly identified",
     toketNotGenerated:"Token has not been generated",
     incorrectmailPass:"Incorrect email or password",
-    sessionExpired:"Session has expired"
+    sessionExpired:"Session has expired",
+    deletedSuccessfully:"Deleted successfully"
 
 }
