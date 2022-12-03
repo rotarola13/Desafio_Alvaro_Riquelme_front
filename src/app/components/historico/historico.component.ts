@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } fro
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Historico } from 'src/app/models/historico';
+import { GLOBAL } from 'src/app/services/global';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 
@@ -18,9 +19,12 @@ export class HistoricoComponent implements OnInit,AfterViewInit {
   displayedColumns: string[] = ['nombredestinatario', 'rut', 'banco', 'tipocuenta', 'monto'];
   datahist: any;
   dataSource = new MatTableDataSource<any>([]);
+  global:any
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   constructor(private _transferenciaService: TransferenciaService, public snackbar: SnackbarComponent) {
+    this.global =GLOBAL; 
   }
   ngAfterViewInit(){
     this.dataSource.paginator=this.paginator;
@@ -36,13 +40,12 @@ export class HistoricoComponent implements OnInit,AfterViewInit {
         this.datahist = response.historico.length;
         console.log(response.historico);
         } else {
-          this.snackbar.openSnackBar('No hay historico disponible', 'Close');          
-        }
-       
+          this.snackbar.openSnackBar(this.global.noHistoryAvailable, 'Close');          
+        }       
       },
       error => {
         if (error.status = 401) {
-          this.snackbar.openSnackBar(error.error.message, 'Close');
+          this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
           this.sessionExpired.emit(true);
         } else {
           this.snackbar.openSnackBar(error.error.message, 'Close');

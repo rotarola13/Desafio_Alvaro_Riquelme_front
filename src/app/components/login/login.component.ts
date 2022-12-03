@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +16,11 @@ public user: User;
 public identity: any;
 public token: any;
 public errorMessage: any;
+global:any
 
-constructor(private _userService: UserService) {
+constructor(private _userService: UserService,public snackbar: SnackbarComponent) {
   this.user = new User('', '', '', '', 'ROLE_USER', '', 0);
+  this.global =GLOBAL; 
 }
 ngOnInit(): void {
   this.identity = this._userService.getIdentity()
@@ -35,9 +39,8 @@ public onSubmit() {
       this.identity = identity;
 
       if (!this.identity._id) {
-        alert('El usuario no esta correctamente identificado')
-      } else {
-        //crear elemento en el localstorage
+        this.snackbar.openSnackBar(this.global.userIdentified, 'Close');      
+      } else {       
         localStorage.setItem('identity',JSON.stringify(identity));
         this._userService.signUp(this.user,true).subscribe(
           response => {
@@ -45,30 +48,31 @@ public onSubmit() {
             this.token = token;
 
             if (this.token.length <= 0) {
-              alert('El token no se ha generado')
-            } else {
-              //crear elemento en el localstorage
-              localStorage.setItem('token',token);
-              console.log(this.token);
-              //token
+              this.snackbar.openSnackBar(this.global.toketNotGenerated, 'Close');             
+            } else {             
+              localStorage.setItem('token',token);            
             }
           },
           error => {
             var errorMessage = <any>error.error.message;
             if (errorMessage != null) {
-              this.errorMessage = error.error.message
-              //console.log(errorMessage);
+              this.errorMessage = error.error.message              
+              this.snackbar.openSnackBar(error.error.message, 'Close');
             }
           }
-        );
-        //token
+        );       
       }
     },
     error => {
       var errorMessage = <any>error.error.message;
       if (errorMessage != null) {
         this.errorMessage = error.error.message
-        //console.log(errorMessage);
+        if (error.status = 404) {
+          this.snackbar.openSnackBar(this.global.incorrectmailPass, 'Close');       
+        } else {
+          this.snackbar.openSnackBar(error.error.message, 'Close');       
+        }
+              
       }
     }
   );

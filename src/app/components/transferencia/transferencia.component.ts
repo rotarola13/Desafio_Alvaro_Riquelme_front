@@ -6,8 +6,11 @@ import { UserService } from 'src/app/services/user.service';
 import { validate, clean, format, getCheckDigit } from 'rut.js'
 import { User } from 'src/app/models/user';
 import { Historico } from 'src/app/models/historico';
-import { TransferenciaService } from 'src/app/services/transferencia.service';
+
 import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { TransferenciaService } from 'src/app/services/transferencia.service';
+import { GLOBAL } from 'src/app/services/global';
+
 
 @Component({
   selector: 'app-transferencia',
@@ -31,12 +34,14 @@ export class TransferenciaComponent implements OnInit {
   detalleDestinatario: any;
   valid: boolean = false;
   user: any;
-  validMax: any=false;
+  validMax: any = false;
+  global: any
 
 
   constructor(private _banksService: BanksService, private _userService: UserService,
     private _transferenciaService: TransferenciaService, public snackbar: SnackbarComponent) {
     this.destinatario = new Destinatario('', '', '', '', '', '', '', '');
+    this.global = GLOBAL;
   }
 
   ngOnInit(): void {
@@ -54,7 +59,7 @@ export class TransferenciaComponent implements OnInit {
       },
       error => {
         if (error.status = 401) {
-          this.snackbar.openSnackBar(error.error.message, 'Close');
+          this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
           this.sessionExpired.emit(true);
         } else {
           var errorMessage = <any>error.error.message;
@@ -73,7 +78,7 @@ export class TransferenciaComponent implements OnInit {
       },
       error => {
         if (error.status = 401) {
-          this.snackbar.openSnackBar(error.error.message, 'Close');
+          this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
           this.sessionExpired.emit(true);
         } else {
           var errorMessage = <any>error.error.message;
@@ -94,19 +99,19 @@ export class TransferenciaComponent implements OnInit {
 
   public onSubmit() {
 
-    this.valid=this.validarRUT(this.destinatario.rut);
-    if (! this.valid) {
-      this.snackbar.openSnackBar('RUT invalido', 'Close');
+    this.valid = this.validarRUT(this.destinatario.rut);
+    if (!this.valid) {
+      this.snackbar.openSnackBar(this.global.invalidRUT, 'Close');
     }
-    else{
+    else {
       this._transferenciaService.registrarDestinatario(this.destinatario).subscribe(
         response => {
-          this.snackbar.openSnackBar('Se ha Guardado Correctamente', 'Close');
+          this.snackbar.openSnackBar(this.global.successfullyDest, 'Close');
           this.cerrarDestinatario();
         },
         error => {
           if (error.status = 401) {
-            this.snackbar.openSnackBar(error.error.message, 'Close');
+            this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
             this.sessionExpired.emit(true);
           } else {
             var errorMessage = <any>error.error.message;
@@ -115,15 +120,15 @@ export class TransferenciaComponent implements OnInit {
               this.snackbar.openSnackBar(error.error.message, 'Close');
             }
           }
-  
+
         }
       );
-    }    
-   
+    }
+
   }
 
-  validarRUT(rut:any) {
-    let validRut = validate(rut);   
+  validarRUT(rut: any) {
+    let validRut = validate(rut);
     return validRut;
   }
 
@@ -156,16 +161,21 @@ export class TransferenciaComponent implements OnInit {
         this._transferenciaService.saveHistoricoTransferencia(historico).subscribe(
           response => {
 
-            this.snackbar.openSnackBar('Transferencia realizada correctamente', 'Close');
+            this.snackbar.openSnackBar(this.global.transferSuccessfully, 'Close');
             this.cerrarDestinatario();
 
           },
           error => {
             var errorMessage = <any>error.error.message;
-            if (errorMessage != null) {
-              this.errorMessage = error.error.message
-              this.snackbar.openSnackBar(error.error.message, 'Close');
+            if (error.status = 401) {
+              this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
+              this.sessionExpired.emit(true);
+            } else {
+              if (errorMessage != null) {
+                this.errorMessage = error.error.message
+                this.snackbar.openSnackBar(error.error.message, 'Close');
 
+              }
             }
           }
         );
@@ -173,25 +183,30 @@ export class TransferenciaComponent implements OnInit {
       },
       error => {
         var errorMessage = <any>error.error.message;
-        if (errorMessage != null) {
-          this.errorMessage = error.error.message
-          this.snackbar.openSnackBar(error.error.message, 'Close');
+        if (error.status = 401) {
+          this.snackbar.openSnackBar(this.global.sessionExpired, 'Close');
+          this.sessionExpired.emit(true);
+        } else {
+          if (errorMessage != null) {
+            this.errorMessage = error.error.message
+            this.snackbar.openSnackBar(error.error.message, 'Close');
+          }
         }
       }
     );
   }
 
-  validaMontoMaximo(event:any){
+  validaMontoMaximo(event: any) {
     if (this.montoTransferencia > parseInt(this.user.saldo)) {
-      this.validMax=false;
-      this.snackbar.openSnackBar('No tiene saldo suficiente', 'Close');
+      this.validMax = false;
+      this.snackbar.openSnackBar(this.global.insufficientbalance, 'Close');
     } else {
       if (this.montoTransferencia == 0) {
-        this.validMax=false;
+        this.validMax = false;
       } else {
-        this.validMax=true;
+        this.validMax = true;
       }
-      
+
     }
 
 
