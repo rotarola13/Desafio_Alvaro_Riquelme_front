@@ -7,6 +7,8 @@ import { Historico } from 'src/app/models/historico';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
 import { GLOBAL } from 'src/app/services/global';
+import { DialogConfirmacionComponent } from '../dialog-confirmacion/dialog-confirmacion.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transferencia',
@@ -35,7 +37,7 @@ export class TransferenciaComponent implements OnInit {
   public spinner: any = false;
 
 
-  constructor(private _banksService: BanksService, private _userService: UserService,
+  constructor(private _banksService: BanksService, private _userService: UserService,public dialogo: MatDialog,
     private _transferenciaService: TransferenciaService, public snackbar: SnackbarComponent) {
     this.destinatario = new Destinatario('', '', '', '', '', '', '', '');
     this.global = GLOBAL;
@@ -248,5 +250,18 @@ export class TransferenciaComponent implements OnInit {
         this.spinner = false;
       }
     );
+  }
+
+  mostrarDialogo(destinatario: Destinatario): void {
+    this.dialogo
+      .open(DialogConfirmacionComponent, {
+        data: `You are going to delete the recipient, do you want to continue?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          this.remove(destinatario);
+        } 
+      });
   }
 }

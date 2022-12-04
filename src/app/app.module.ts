@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './components/login/login.component';
-
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
-
 import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -27,8 +24,8 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { TransferenciaComponent } from './components/transferencia/transferencia.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HeaderComponent } from './components/header/header.component';
-
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogConfirmacionComponent } from './components/dialog-confirmacion/dialog-confirmacion.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +35,8 @@ import { HeaderComponent } from './components/header/header.component';
     HomeComponent,
     HistoricoComponent,
     SnackbarComponent,
-    HeaderComponent,    
+    HeaderComponent,
+    DialogConfirmacionComponent,    
     
   ],
   imports: [
@@ -59,7 +57,8 @@ import { HeaderComponent } from './components/header/header.component';
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
     
   ],
   providers: [SnackbarComponent],
