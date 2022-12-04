@@ -22,8 +22,7 @@ export class SnackbarComponent implements OnInit {
       this.snackBar.open(message, action, {
         duration: this.timeOut,
         verticalPosition: 'top', // 'top' | 'bottom'
-        horizontalPosition: 'right', //'start' | 'center' | 'end' | 'left' | 'right'
-       
+        horizontalPosition: 'right', //'start' | 'center' | 'end' | 'left' | 'right'       
       });
 
     })
