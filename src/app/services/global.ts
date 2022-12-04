@@ -14,6 +14,7 @@ export var GLOBAL = {
     toketNotGenerated:"Token has not been generated",
     incorrectmailPass:"Incorrect email or password",
     sessionExpired:"Session has expired",
-    deletedSuccessfully:"Deleted successfully"
+    deletedSuccessfully:"Deleted successfully",
+    incorrectAmount:"incorrect amount"
 
 }

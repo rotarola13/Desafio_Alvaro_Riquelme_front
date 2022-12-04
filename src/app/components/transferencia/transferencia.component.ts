@@ -213,7 +213,11 @@ export class TransferenciaComponent implements OnInit {
   }
 
   validaMontoMaximo(event: any) {
-    if (this.montoTransferencia > parseInt(this.user.saldo)) {
+    
+    if (this.montoTransferencia < 0) {
+      this.validMax = false;
+      this.snackbar.openSnackBar(this.global.incorrectAmount, 'Close');
+    } else if (this.montoTransferencia > parseInt(this.user.saldo)) {
       this.validMax = false;
       this.snackbar.openSnackBar(this.global.insufficientbalance, 'Close');
     } else {

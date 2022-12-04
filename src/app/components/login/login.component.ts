@@ -39,13 +39,17 @@ public crearCuenta(){
 }
 
 public onSubmit() {
+ this.logIn();
+}
+
+logIn(){
   this.spinner=true
   this._userService.signUp(this.user,false).subscribe(
     response => {
       let identity = response.user;
       this.identity = identity;
 
-      if (!this.identity._id) {
+     if (!this.identity._id) {
         this.snackbar.openSnackBar(this.global.userIdentified, 'Close');      
       } else {       
         localStorage.setItem('identity',JSON.stringify(identity));
@@ -94,6 +98,7 @@ logout(){
   localStorage.clear();
   this.identity=null;
   this.token=null;
+  this.user=new User();
 
 }
 
