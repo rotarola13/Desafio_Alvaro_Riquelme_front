@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DestinatarioComponent } from './transferencia.component';
+import { TransferenciaComponent } from './transferencia.component';
 
 describe('DestinatarioComponent', () => {
-  let component: DestinatarioComponent;
-  let fixture: ComponentFixture<DestinatarioComponent>;
+  let component: TransferenciaComponent;
+  let fixture: ComponentFixture<TransferenciaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DestinatarioComponent ]
+      declarations: [ TransferenciaComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DestinatarioComponent);
+    fixture = TestBed.createComponent(TransferenciaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
